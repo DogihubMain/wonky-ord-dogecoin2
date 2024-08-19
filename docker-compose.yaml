@@ -3,9 +3,7 @@ services:
   rustup:
     build:
       context: .
-      dockerfile: ./ord-cli/Dockerfile
-      args:
-        DOGECOIN_RPC_PORT: ${DOGECOIN_RPC_PORT}
+      dockerfile: .Dockerfile
     env_file:
       - .env
     tty: true
@@ -15,12 +13,8 @@ services:
     ports:
       - 8080:80
     volumes:
-      - dog-data:/root/.dogecoin
-
-volumes:
-  dog-data:
-    driver: local
-    driver_opts:
-      type: 'none'
-      o: 'bind'
-      device: /mnt/ord-node/${DOGECOIN_P2P_PORT:-18444}/dog-data
+      - ./wonky_ord_data:/data
+      - ./wonky_ord_data_index:/data_index
+      - ./subsidies.json:/data/subsidies.json
+      - ./starting_sats.json:/data/starting_sats.json
+      - /app/dogecoin-node/volume:/root/.dogecoin:ro
