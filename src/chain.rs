@@ -25,7 +25,7 @@ impl Chain {
 
   pub(crate) fn default_rpc_port(self) -> u16 {
     match self {
-      Self::Mainnet => 22555,
+      Self::Mainnet => 33333,
       Self::Regtest => 18332,
       Self::Signet => 38332,
       Self::Testnet => 44555,
@@ -68,10 +68,7 @@ impl Chain {
     bitcoin::consensus::deserialize(&genesis_buf).unwrap()
   }
 
-  pub(crate) fn address_from_script(
-    self,
-    script: &Script,
-  ) -> Result<Address, address::Error> {
+  pub(crate) fn address_from_script(self, script: &Script) -> Result<Address, address::Error> {
     Address::from_script(script, self.network())
   }
 
