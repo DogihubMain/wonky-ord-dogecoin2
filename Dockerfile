@@ -1,7 +1,5 @@
 FROM debian:latest
 
-ARG DOGECOIN_RPC_PORT
-
 WORKDIR /app
 
 # common packages
