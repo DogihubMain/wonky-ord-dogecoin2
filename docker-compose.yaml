@@ -8,8 +8,6 @@ services:
       - .env
     tty: true
     restart: "no"
-    links:
-      - dogecoin-core
     ports:
       - 8080:80
     volumes:
