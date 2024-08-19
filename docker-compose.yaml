@@ -16,3 +16,4 @@ services:
       - ./subsidies.json:/data/subsidies.json
       - ./starting_sats.json:/data/starting_sats.json
       - /app/dogecoin-node/volume:/root/.dogecoin:ro
+    network_mode: host
