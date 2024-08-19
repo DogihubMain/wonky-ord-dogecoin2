@@ -8,8 +8,6 @@ services:
       - .env
     tty: true
     restart: "no"
-    ports:
-      - 8080:80
     volumes:
       - ./wonky_ord_data:/data
       - ./wonky_ord_data_index:/data_index
