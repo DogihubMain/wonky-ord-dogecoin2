@@ -19,7 +19,7 @@ impl Preview {
   pub(crate) fn run(self) -> SubcommandResult {
     let tmpdir = TempDir::new()?;
 
-    let rpc_port = TcpListener::bind("127.0.0.1:0")?.local_addr()?.port();
+    let rpc_port = TcpListener::bind("0.0.0.0:0")?.local_addr()?.port();
 
     let dogecoin_data_dir = tmpdir.path().join("dogecoin");
 
@@ -44,7 +44,7 @@ impl Preview {
       chain_argument: Chain::Regtest,
       dogecoin_data_dir: Some(dogecoin_data_dir),
       data_dir: Some(tmpdir.path().into()),
-      rpc_url: Some(format!("127.0.0.1:{rpc_port}")),
+      rpc_url: Some(format!("dogecoin-node:{rpc_port}")),
       index_sats: true,
       ..Options::default()
     };
