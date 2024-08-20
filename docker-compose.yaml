@@ -14,11 +14,4 @@ services:
       - ./subsidies.json:/data/subsidies.json
       - ./starting_sats.json:/data/starting_sats.json
       - /app/dogecoin-node/volume:/root/.dogecoin:ro
-    ports:
-      - 8080:80
-    networks:
-      - dogihub_network
-
-networks:
-  dogihub_network:
-    external: true
+    network_mode: host
