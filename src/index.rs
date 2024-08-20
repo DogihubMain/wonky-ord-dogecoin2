@@ -7,11 +7,12 @@ use {
     },
     updater::Updater,
   },
-  bitcoin::BlockHeader,
-  bitcoincore_rpc::{Auth, Client, json::GetBlockHeaderResult},
-  chrono::SubsecRound,
+  super::*,
   crate::inscription::ParsedInscription,
   crate::wallet::Wallet,
+  bitcoin::BlockHeader,
+  bitcoincore_rpc::{json::GetBlockHeaderResult, Auth, Client},
+  chrono::SubsecRound,
   indicatif::{ProgressBar, ProgressStyle},
   log::log_enabled,
   redb::{
@@ -21,14 +22,13 @@ use {
   std::collections::HashMap,
   std::io::Cursor,
   std::sync::atomic::{self, AtomicBool},
-  super::*,
   url::Url,
 };
 
-use crate::drc20::{
-  Balance, max_script_tick_key, min_script_tick_key, script_tick_key, Tick, TokenInfo,
-};
 use crate::drc20::script_key::ScriptKey;
+use crate::drc20::{
+  max_script_tick_key, min_script_tick_key, script_tick_key, Balance, Tick, TokenInfo,
+};
 use crate::sat::Sat;
 use crate::sat_point::SatPoint;
 use crate::templates::BlockHashAndConfirmations;
@@ -194,13 +194,13 @@ impl Index {
       let password = url.password().map(|x| x.to_string()).unwrap_or_default();
 
       log::info!(
-        "Connecting to Dogecoin Core RPC server at {rpc_url} using credentials from the url"
+        "Connecting to Dogecoin Core RPC server 1 at {rpc_url} using credentials from the url"
       );
 
       Auth::UserPass(username, password)
     } else {
       log::info!(
-        "Connecting to Dogecoin Core RPC server at {rpc_url} using credentials from `{}`",
+        "Connecting to Dogecoin Core RPC server 2 at {rpc_url} using credentials from `{}`",
         cookie_file.display()
       );
 
@@ -1532,9 +1532,9 @@ impl Index {
 #[cfg(test)]
 mod tests {
   use {
-    bitcoin::secp256k1::rand::{self, RngCore},
-    crate::index::testing::Context,
     super::*,
+    crate::index::testing::Context,
+    bitcoin::secp256k1::rand::{self, RngCore},
   };
 
   #[test]
