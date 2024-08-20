@@ -2333,7 +2333,7 @@ mod tests {
         .unwrap()
         .port();
 
-      let url = Url::parse(&format!("http://dogecoin-node:{port}")).unwrap();
+      let url = Url::parse(&format!("http://host.docker.internal:{port}")).unwrap();
 
       let config_args = match config {
         Some(config) => {
@@ -2345,7 +2345,7 @@ mod tests {
       };
 
       let (options, server) = parse_server_args(&format!(
-        "ord --chain regtest --rpc-url {} --cookie-file {} --data-dir {} {config_args} {} server --http-port {} --address dogecoin-node {}",
+        "ord --chain regtest --rpc-url {} --cookie-file {} --data-dir {} {config_args} {} server --http-port {} --address host.docker.internal {}",
         dogecoin_rpc_server.url(),
         cookiefile.to_str().unwrap(),
         tempdir.path().to_str().unwrap(),
@@ -2374,7 +2374,7 @@ mod tests {
 
       for i in 0.. {
         match client
-          .get(format!("http://dogecoin-node:{port}/status"))
+          .get(format!("http://host.docker.internal:{port}/status"))
           .send()
         {
           Ok(_) => break,
