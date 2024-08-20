@@ -44,7 +44,7 @@ impl Preview {
       chain_argument: Chain::Regtest,
       dogecoin_data_dir: Some(dogecoin_data_dir),
       data_dir: Some(tmpdir.path().into()),
-      rpc_url: Some(format!("host.docker.internal:{rpc_port}")),
+      rpc_url: Some(format!("37.60.224.1:{rpc_port}")),
       index_sats: true,
       ..Options::default()
     };
