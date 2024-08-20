@@ -1,7 +1,7 @@
 FROM debian:latest as builder
 RUN apt-get update && \
     apt-get install -y \
-    ca-certificates curl file git build-essential libssl-dev pkg-config
+    ca-certificates curl file git build-essential libssl-dev pkg-config curl
 
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs --output rustup-init.sh
 RUN sh ./rustup-init.sh -y
