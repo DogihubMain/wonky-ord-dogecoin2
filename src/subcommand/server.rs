@@ -2333,7 +2333,7 @@ mod tests {
         .unwrap()
         .port();
 
-      let url = Url::parse(&format!("http://localhost:{port}")).unwrap();
+      let url = Url::parse(&format!("http://127.0.0.1:{port}")).unwrap();
 
       let config_args = match config {
         Some(config) => {
@@ -2345,7 +2345,7 @@ mod tests {
       };
 
       let (options, server) = parse_server_args(&format!(
-        "ord --chain regtest --rpc-url {} --cookie-file {} --data-dir {} {config_args} {} server --http-port {} --address localhost {}",
+        "ord --chain regtest --rpc-url {} --cookie-file {} --data-dir {} {config_args} {} server --http-port {} --address 127.0.0.1 {}",
         dogecoin_rpc_server.url(),
         cookiefile.to_str().unwrap(),
         tempdir.path().to_str().unwrap(),
@@ -2373,7 +2373,7 @@ mod tests {
         .unwrap();
 
       for i in 0.. {
-        match client.get(format!("http://localhost:{port}/status")).send() {
+        match client.get(format!("http://127.0.0.1:{port}/status")).send() {
           Ok(_) => break,
           Err(err) => {
             if i == 400 {
