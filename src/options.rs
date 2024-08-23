@@ -196,13 +196,17 @@ impl Options {
       cookie_file.display()
     );
 
-    let client =
-      Client::new(&rpc_url, Auth::CookieFile(cookie_file.clone())).with_context(|| {
-        format!(
-          "failed to connect to Dogecoin Core RPC at {rpc_url} using cookie file {}",
-          cookie_file.display()
-        )
-      })?;
+    let client = Client::new_with_timeout(
+      &rpc_url,
+      Auth::CookieFile(cookie_file.clone()),
+      std::time::Duration::from_secs(30),
+    )
+    .with_context(|| {
+      format!(
+        "failed to connect to Dogecoin Core RPC at {rpc_url} using cookie file {}",
+        cookie_file.display()
+      )
+    })?;
 
     let rpc_chain = match client.get_blockchain_info()?.chain.as_str() {
       "main" => Chain::Mainnet,

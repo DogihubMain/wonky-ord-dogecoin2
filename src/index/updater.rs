@@ -2,9 +2,9 @@ use bitcoincore_rpc::bitcoin::BlockHeader;
 
 use {
   self::{dune_updater::DuneUpdater, inscription_updater::InscriptionUpdater},
+  super::{fetcher::Fetcher, *},
   futures::future::try_join_all,
   std::sync::mpsc,
-  super::{*, fetcher::Fetcher},
   tokio::sync::mpsc::{error::TryRecvError, Receiver, Sender},
 };
 
@@ -174,8 +174,12 @@ impl<'index> Updater<'_> {
 
     let height_limit = index.height_limit;
 
-    let client =
-      Client::new(&index.rpc_url, index.auth.clone()).context("failed to connect to RPC URL")?;
+    let client = Client::new_with_timeout(
+      &index.rpc_url,
+      index.auth.clone(),
+      std::time::Duration::from_secs(30),
+    )
+    .context("failed to connect to RPC URL")?;
 
     let first_inscription_height = index.first_inscription_height;
 

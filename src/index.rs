@@ -207,7 +207,9 @@ impl Index {
       Auth::CookieFile(cookie_file)
     };
 
-    let client = Client::new(&rpc_url, auth.clone()).context("failed to connect to RPC URL")?;
+    let client: Client =
+      Client::new_with_timeout(&rpc_url, auth.clone(), std::time::Duration::from_secs(30))
+        .context("failed to connect to RPC URL")?;
 
     let data_dir = options.data_dir()?;
 
